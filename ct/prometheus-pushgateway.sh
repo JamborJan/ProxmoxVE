@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/build.func)
+source <(curl -fsSL https://raw.githubusercontent.com/JamborJan/ProxmoxVE/main/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
 # Author: tteck (tteckster)
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
@@ -28,18 +28,18 @@ function update_script() {
     exit
   fi
   RELEASE=$(curl -fsSL https://api.github.com/repos/prometheus/pushgateway/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-  if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
+  if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/"${APP}"_version.txt)" ]]; then
     msg_info "Stopping ${APP}"
     systemctl stop pushgateway
     msg_ok "Stopped ${APP}"
 
     msg_info "Updating ${APP} to v${RELEASE}"
-    cd /opt
+    cd /opt || exit
     curl -fsSL "https://github.com/prometheus/pushgateway/releases/download/v${RELEASE}/pushgateway-${RELEASE}.linux-amd64.tar.gz" -o $(basename "https://github.com/prometheus/pushgateway/releases/download/v${RELEASE}/pushgateway-${RELEASE}.linux-amd64.tar.gz")
-    tar -xf pushgateway-${RELEASE}.linux-amd64.tar.gz
-    cp -rf pushgateway-${RELEASE}.linux-amd64/pushgateway /usr/local/bin/
-    rm -rf pushgateway-${RELEASE}.linux-amd64 pushgateway-${RELEASE}.linux-amd64.tar.gz
-    echo "${RELEASE}" >/opt/${APP}_version.txt
+    tar -xf pushgateway-"${RELEASE}".linux-amd64.tar.gz
+    cp -rf pushgateway-"${RELEASE}".linux-amd64/pushgateway /usr/local/bin/
+    rm -rf pushgateway-"${RELEASE}".linux-amd64 pushgateway-"${RELEASE}".linux-amd64.tar.gz
+    echo "${RELEASE}" >/opt/"${APP}"_version.txt
     msg_ok "Updated ${APP} to v${RELEASE}"
 
     msg_info "Starting ${APP}"
