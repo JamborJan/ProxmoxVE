@@ -1,0 +1,35 @@
+{
+    "name": "Prometheus Pushgateway",
+    "slug": "prometheus-pushgateway",
+    "categories": [
+        9
+    ],
+    "date_created": "2024-05-02",
+    "type": "ct",
+    "updateable": true,
+    "privileged": false,
+    "interface_port": 9091,
+    "documentation": null,
+    "website": "https://github.com/prometheus/pushgateway",
+    "logo": "https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/main/assets/prometheus.svg",
+    "config_path": "/etc/pushgateway/metrics.txt",
+    "description": "Prometheus Pushgateway allows ephemeral and batch jobs to expose their metrics to Prometheus. Since these jobs may not exist long enough to be scraped, they can push their metrics to the Pushgateway, which then exposes them for Prometheus to scrape. This makes it an essential component for monitoring short-lived processes in a Prometheus ecosystem.",
+    "install_methods": [
+        {
+            "type": "default",
+            "script": "ct/prometheus-pushgateway.sh",
+            "resources": {
+                "cpu": 1,
+                "ram": 1024,
+                "hdd": 2,
+                "os": "debian",
+                "version": "12"
+            }
+        }
+    ],
+    "default_credentials": {
+        "username": null,
+        "password": null
+    },
+    "notes": []
+}
